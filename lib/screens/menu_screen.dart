@@ -9,6 +9,16 @@ class MenuScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Flutter Animations"),
       ),
+      body: Center(
+        child: Column(
+          children: [
+            ElevatedButton(
+              onPressed: () {},
+              child: const Text("Implicit Animations"),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
