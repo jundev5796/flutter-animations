@@ -13,7 +13,7 @@ class _ExplicitAnimationsScreenState extends State<ExplicitAnimationsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Explicit Anmiations"),
+        title: const Text("Explicit Anmiations"),
       ),
     );
   }
