@@ -10,6 +10,7 @@ class SwipingCardsScreen extends StatefulWidget {
 class _SwipingCardsScreenState extends State<SwipingCardsScreen>
     with SingleTickerProviderStateMixin {
   late final size = MediaQuery.of(context).size;
+
   late final AnimationController _position = AnimationController(
     vsync: this,
     duration: const Duration(seconds: 1),
@@ -17,14 +18,17 @@ class _SwipingCardsScreenState extends State<SwipingCardsScreen>
     upperBound: (size.width + 100),
     value: 0.0,
   );
+
   late final Tween<double> _rotation = Tween(
     begin: -15,
     end: 15,
   );
+
   late final Tween<double> _scale = Tween(
     begin: 0.8,
     end: 1,
   );
+
   void _onHorizontalDragUpdate(DragUpdateDetails details) {
     _position.value += details.delta.dx;
   }
@@ -40,11 +44,13 @@ class _SwipingCardsScreenState extends State<SwipingCardsScreen>
     final bound = size.width - 200;
     final dropZone = size.width + 100;
     if (_position.value.abs() >= bound) {
-      if (_position.value.isNegative) {
-        _position.animateTo((dropZone) * -1).whenComplete(_whenComplete);
-      } else {
-        _position.animateTo(dropZone).whenComplete(_whenComplete);
-      }
+      final factor = _position.value.isNegative ? -1 : 1;
+      _position
+          .animateTo(
+            (dropZone) * factor,
+            curve: Curves.easeOut,
+          )
+          .whenComplete(_whenComplete);
     } else {
       _position.animateTo(
         0,
@@ -60,7 +66,6 @@ class _SwipingCardsScreenState extends State<SwipingCardsScreen>
   }
 
   int _index = 1;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,14 +85,14 @@ class _SwipingCardsScreenState extends State<SwipingCardsScreen>
             alignment: Alignment.topCenter,
             children: [
               Positioned(
-                top: 100,
+                top: 50,
                 child: Transform.scale(
-                  scale: scale,
+                  scale: min(scale, 1.0),
                   child: Card(index: _index == 5 ? 1 : _index + 1),
                 ),
               ),
               Positioned(
-                top: 100,
+                top: 50,
                 child: GestureDetector(
                   onHorizontalDragUpdate: _onHorizontalDragUpdate,
                   onHorizontalDragEnd: _onHorizontalDragEnd,
@@ -110,9 +115,7 @@ class _SwipingCardsScreenState extends State<SwipingCardsScreen>
 
 class Card extends StatelessWidget {
   final int index;
-
   const Card({super.key, required this.index});
-
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -122,7 +125,7 @@ class Card extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       child: SizedBox(
         width: size.width * 0.8,
-        height: size.height * 0.5,
+        height: size.height * 0.65,
         child: Image.asset(
           "assets/covers/$index.jpeg",
           fit: BoxFit.cover,
