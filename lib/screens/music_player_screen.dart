@@ -13,11 +13,8 @@ class _MusicPlayerScreenState extends State<MusicPlayerScreen> {
   final PageController _pageController = PageController(
     viewportFraction: 0.8,
   );
-
   int _currentPage = 0;
-
   final ValueNotifier<double> _scroll = ValueNotifier(0.0);
-
   void _onPageChanged(int newPage) {
     setState(() {
       _currentPage = newPage;
@@ -39,11 +36,18 @@ class _MusicPlayerScreenState extends State<MusicPlayerScreen> {
     super.dispose();
   }
 
-  void _onTap(int index) {
+  void _onTap(int imageIndex) {
     Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (context) => MusicPlayerDetailScreen(index: index),
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) {
+          return FadeTransition(
+            opacity: animation,
+            child: MusicPlayerDetailScreen(
+              index: imageIndex,
+            ),
+          );
+        },
       ),
     );
   }

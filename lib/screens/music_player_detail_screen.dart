@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 class MusicPlayerDetailScreen extends StatefulWidget {
   final int index;
 
-  const MusicPlayerDetailScreen({super.key, required this.index});
+  const MusicPlayerDetailScreen({
+    super.key,
+    required this.index,
+  });
 
   @override
   State<MusicPlayerDetailScreen> createState() =>
@@ -15,7 +18,7 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("My Hero Academia"),
+        title: const Text('My Hero Academia'),
       ),
       body: Column(
         children: [
@@ -28,6 +31,7 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen> {
               tag: "${widget.index}",
               child: Container(
                 height: 350,
+                width: 350,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
